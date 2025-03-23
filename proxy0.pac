@@ -5,7 +5,7 @@
 //   isInNet(host, pattern, mask): 检查一个主机是否在指定的网络中。
 //   shExpMatch(str, pattern)    : 检查一个字符串是否匹配给定模式。
 
-var proxy = 'PROXY socks5://127.0.0.1:1080; DIRECT;';
+var proxy = 'PROXY 127.0.0.1:1080; DIRECT;';
 
 var directHosts = [
     "localhost",
