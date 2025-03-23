@@ -4,8 +4,6 @@
 //   isInNet(host, pattern, mask): 检查一个主机是否在指定的网络中。
 //   shExpMatch(str, pattern)    : 检查一个字符串是否匹配给定模式。
 
-// var lastRule = '';
-
 var proxy = 'SOCKS5 127.0.0.1:1080; SOCKS 127.0.0.1:1080; DIRECT;';
 
 var directHosts = [
@@ -6349,7 +6347,7 @@ var rules = [
 
 function FindProxyForURL(url, host) {
   for (var i = 0; i < directHosts.length; i++) {
-    if (host == host, directHosts[i] || isInSubnet(host, directHosts[i])) {
+    if (host == directHosts[i] || isInSubnet(host, directHosts[i])) {
       return "DIRECT";
     }
   }
@@ -6369,7 +6367,6 @@ function testRules(host, index) {
         return i % 2 == 0 ? 'DIRECT' : proxy;
     }
   }
-  // lastRule = '';
 }
 
 function isInSubnet(ip, subnet) {
