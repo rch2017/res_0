@@ -1,4 +1,4 @@
-// 情景模式: ova jumper（默认走直连, 列表里的IP和域名走代理）
+// Scenario: ova jumper（direct first, ip in list via proxy）
 var proxy = 'PROXY 127.0.0.1:1080; DIRECT;';
 
 var viaProxyHosts = [

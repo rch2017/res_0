@@ -1,4 +1,4 @@
-// 情景模式: 优先走代理（默认走代理, 列表里的IP和域名走直连）
+//Scenario: proxy first, ip or domain in list connect direct
 var proxy = 'PROXY 127.0.0.1:1080; DIRECT;';
 
 var directIPs = [

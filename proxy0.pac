@@ -1,11 +1,4 @@
-// 情景模式: 科学上网
-// 在直连列表里的走直连，其它的按规则走
-// PAC 提供的内置函数:
-//   dnsResolve(host)            : 将主机名解析为 IP 地址。
-//   myIpAddress()               : 返回当前客户端的 IP 地址。
-//   isInNet(host, pattern, mask): 检查一个主机是否在指定的网络中。
-//   shExpMatch(str, pattern)    : 检查一个字符串是否匹配给定模式。
-
+// Scenario: gfw list
 var proxy = 'PROXY 127.0.0.1:1080; DIRECT;';
 
 var directHosts = [
@@ -6376,12 +6369,9 @@ function isInSubnet(ip, subnet) {
   var ipParts = ip.split('.').map(Number);
   var subnetParts = subnet.split('/')[0].split('.').map(Number);
   var maskBits = parseInt(subnet.split('/')[1], 10);
-  // 计算子网掩码
   var mask = (0xFFFFFFFF << (32 - maskBits)) >>> 0;
-  // 将 IP 地址和子网地址转换为整数
   var ipInt = (ipParts[0] << 24) | (ipParts[1] << 16) | (ipParts[2] << 8) | ipParts[3];
   var subnetInt = (subnetParts[0] << 24) | (subnetParts[1] << 16) | (subnetParts[2] << 8) | subnetParts[3];
-  // 检查 IP 是否在子网内
   return (ipInt & mask) === (subnetInt & mask);
 }
 
