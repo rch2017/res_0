@@ -6,57 +6,6 @@
 
 // var lastRule = '';
 
-function FindProxyForURL(url, host) {
-  for (var i = 0; i < directHosts.length; i++) {
-    if (host == host, directHosts[i] || isInSubnet(host, directHosts[i])) {
-      return "DIRECT";
-    }
-  }
-  for (var i = 0; i < rules.length; i++) {
-    ret = testRules(host, i);
-    if (ret != undefined)
-      return ret;
-  }
-  return 'DIRECT';
-}
-
-function testRules(host, index) {
-  for (var i = 0; i < rules[index].length; i++) {
-    for (var j = 0; j < rules[index][i].length; j++) {
-      var lastRule = rules[index][i][j]
-      if (host == lastRule || host.endsWith('.' + lastRule))
-        return i % 2 == 0 ? 'DIRECT' : proxy;
-    }
-  }
-  // lastRule = '';
-}
-
-function isInSubnet(ip, subnet) {
-  var ipParts = ip.split('.').map(Number);
-  var subnetParts = subnet.split('/')[0].split('.').map(Number);
-  var maskBits = parseInt(subnet.split('/')[1], 10);
-  // 计算子网掩码
-  var mask = (0xFFFFFFFF << (32 - maskBits)) >>> 0;
-  // 将 IP 地址和子网地址转换为整数
-  var ipInt = (ipParts[0] << 24) | (ipParts[1] << 16) | (ipParts[2] << 8) | ipParts[3];
-  var subnetInt = (subnetParts[0] << 24) | (subnetParts[1] << 16) | (subnetParts[2] << 8) | subnetParts[3];
-  // 检查 IP 是否在子网内
-  return (ipInt & mask) === (subnetInt & mask);
-}
-
-// REF: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/endsWith
-if (!String.prototype.endsWith) {
-  String.prototype.endsWith = function(searchString, position) {
-    var subjectString = this.toString();
-    if (typeof position !== 'number' || !isFinite(position) || Math.floor(position) !== position || position > subjectString.length) {
-      position = subjectString.length;
-    }
-    position -= searchString.length;
-    var lastIndex = subjectString.indexOf(searchString, position);
-    return lastIndex !== -1 && lastIndex === position;
-  };
-}
-
 var proxy = 'SOCKS5 127.0.0.1:1080; SOCKS 127.0.0.1:1080; DIRECT;';
 
 var directHosts = [
@@ -6397,3 +6346,54 @@ var rules = [
         ]
     ]
 ];
+
+function FindProxyForURL(url, host) {
+  for (var i = 0; i < directHosts.length; i++) {
+    if (host == host, directHosts[i] || isInSubnet(host, directHosts[i])) {
+      return "DIRECT";
+    }
+  }
+  for (var i = 0; i < rules.length; i++) {
+    ret = testRules(host, i);
+    if (ret != undefined)
+      return ret;
+  }
+  return 'DIRECT';
+}
+
+function testRules(host, index) {
+  for (var i = 0; i < rules[index].length; i++) {
+    for (var j = 0; j < rules[index][i].length; j++) {
+      var lastRule = rules[index][i][j]
+      if (host == lastRule || host.endsWith('.' + lastRule))
+        return i % 2 == 0 ? 'DIRECT' : proxy;
+    }
+  }
+  // lastRule = '';
+}
+
+function isInSubnet(ip, subnet) {
+  var ipParts = ip.split('.').map(Number);
+  var subnetParts = subnet.split('/')[0].split('.').map(Number);
+  var maskBits = parseInt(subnet.split('/')[1], 10);
+  // 计算子网掩码
+  var mask = (0xFFFFFFFF << (32 - maskBits)) >>> 0;
+  // 将 IP 地址和子网地址转换为整数
+  var ipInt = (ipParts[0] << 24) | (ipParts[1] << 16) | (ipParts[2] << 8) | ipParts[3];
+  var subnetInt = (subnetParts[0] << 24) | (subnetParts[1] << 16) | (subnetParts[2] << 8) | subnetParts[3];
+  // 检查 IP 是否在子网内
+  return (ipInt & mask) === (subnetInt & mask);
+}
+
+// REF: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/endsWith
+if (!String.prototype.endsWith) {
+  String.prototype.endsWith = function(searchString, position) {
+    var subjectString = this.toString();
+    if (typeof position !== 'number' || !isFinite(position) || Math.floor(position) !== position || position > subjectString.length) {
+      position = subjectString.length;
+    }
+    position -= searchString.length;
+    var lastIndex = subjectString.indexOf(searchString, position);
+    return lastIndex !== -1 && lastIndex === position;
+  };
+}
