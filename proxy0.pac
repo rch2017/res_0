@@ -2,8 +2,6 @@
 var proxy = 'PROXY 127.0.0.1:1080; DIRECT;';
 
 var directHosts = [
-    "localhost",
-    "127.0.0.1",
     "10.0.1.0/24",
     "192.168.0.0/24",
     "192.168.1.0/24",
@@ -13,23 +11,25 @@ var directHosts = [
 var rules = [
     [
         [
-            "__domestic__almost_used",
+            "__local__recent",
+            "localhost",
+            "127.0.0.1"
+        ],
+        [
+            "__oversea__recent",
+            "google.com",
+            "poe.com"
+        ]
+    ],
+    [
+        [
+            "__local__",
             "baidu.com",
             "tencent.com",
             "sina.com",
             "sohu.com",
             "163.com",
             "126.com"
-        ],
-        [
-            "__oversea__almost_used",
-            "google.com",
-            "poe.com",
-        ]
-    ],
-    [
-        [
-            "__domestic__"
         ],
         [
             "__oversea__",
@@ -6342,7 +6342,7 @@ var rules = [
 
 function FindProxyForURL(url, host) {
   for (var i = 0; i < directHosts.length; i++) {
-    if (host == directHosts[i] || isInSubnet(host, directHosts[i])) {
+    if (isInSubnet(host, directHosts[i])) {
       return "DIRECT";
     }
   }
@@ -6362,7 +6362,7 @@ function testRules(host, index) {
         return i % 2 == 0 ? 'DIRECT' : proxy;
     }
   }
-  return 'DIRECT'
+  return 'DIRECT';
 }
 
 function isInSubnet(ip, subnet) {

@@ -11,8 +11,6 @@
 var proxy = 'SOCKS5 127.0.0.1:1080; SOCKS 127.0.0.1:1080; DIRECT;';
 
 var directHosts = [
-    "localhost",
-    "127.0.0.1",
     "10.0.1.0/24",
     "192.168.0.0/24",
     "192.168.1.0/24",
@@ -22,17 +20,19 @@ var directHosts = [
 var rules = [
     [
         [
-            "__domestic__almost_used",
-            "baidu.com"
+            "__local__recent",
+            "localhost",
+            "127.0.0.1"
         ],
         [
-            "__oversea__almost_used",
+            "__oversea__recent",
             "google.com"
         ]
     ],
     [
         [
-            "__domestic__"
+            "__local__",
+            "baidu.com"
         ],
         [
             "__oversea__",
@@ -43,6 +43,9 @@ var rules = [
 ];
 
 function FindProxyForURL(url, host) {
+  if (isInNet(host, "192.168.1.0", "255.255.255.0")) {
+    return "DIRECT";
+  }
   for (var i = 0; i < directHosts.length; i++) {
     if (host == directHosts[i] || isInSubnet(host, directHosts[i])) {
       return "DIRECT";
