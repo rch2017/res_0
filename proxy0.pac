@@ -1,3 +1,4 @@
+// 情景模式: 科学上网
 // 在直连列表里的走直连，其它的按规则走
 // PAC 提供的内置函数:
 //   dnsResolve(host)            : 将主机名解析为 IP 地址。
@@ -6368,6 +6369,7 @@ function testRules(host, index) {
         return i % 2 == 0 ? 'DIRECT' : proxy;
     }
   }
+  return 'DIRECT'
 }
 
 function isInSubnet(ip, subnet) {

@@ -1,4 +1,4 @@
-// 默认走直连, 列表里的IP和域名走代理
+// 情景模式: ova jumper（默认走直连, 列表里的IP和域名走代理）
 var proxy = 'PROXY 127.0.0.1:1080; DIRECT;';
 
 var viaProxyHosts = [
@@ -10,10 +10,10 @@ var viaProxyHosts = [
 
 function FindProxyForURL(url, host) {
   for (var i = 0; i < viaProxyHosts.length; i++) {
-    var addr = viaProxyHosts[i]
-    if (isInNet(host, addr[i][0], addr[i][1])) {
+    var addr = viaProxyHosts[i];
+    if (isInNet(host, addr[0], addr[1])) {
       return proxy;
     }
   }
-  return DIRECT;
+  return "DIRECT";
 }
