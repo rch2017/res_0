@@ -12,7 +12,7 @@ function FindProxyForURL(url, host) {
   for (var i = 0; i < viaProxyHosts.length; i++) {
     var addr = viaProxyHosts[i]
     if (isInNet(host, addr[i][0], addr[i][1])) {
-      return "proxy";
+      return proxy;
     }
   }
   return DIRECT;
